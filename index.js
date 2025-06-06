@@ -8,7 +8,12 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8888;
 
-app.use(cors());
+const corsOptions = {
+  origin: ['http://localhost:5173', 'https://matching-music-v2.web.app'], // ←あなたの本番と開発フロントエンド
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
@@ -74,5 +79,5 @@ app.get('/refresh_token', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`🎧 Spotify Auth Server running on port ${port}`);
+  console.log(`🎧 Spotify Auth Server running at http://127.0.0.1:${port}`);
 });
